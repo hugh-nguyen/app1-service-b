@@ -12,6 +12,6 @@ app.get('/b/getresult', (req: Request, res: Response) => {
   res.json({ result: x + y });
 });
 
-app.listen(5001, () => {
-  console.log('service-b-0-0-1 on port 5001');
+app.listen(80, () => {
+  console.log('service-b-0-0-1 on port 80');
 });
