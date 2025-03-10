@@ -9,9 +9,9 @@ app.get('/b/getresult', (req: Request, res: Response) => {
   if (Number.isNaN(x) || Number.isNaN(y)) {
     return res.status(400).json({ error: 'Missing x or y' });
   }
-  res.json({ result: x + y });
+  res.json({ result: x * y });
 });
 
 app.listen(80, () => {
-  console.log('service-b-0-0-1 on port 80');
+  console.log('listening on port 80');
 });
