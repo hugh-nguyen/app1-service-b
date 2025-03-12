@@ -1,3 +1,3 @@
 application-name: app1
 service-name: service-b
-service-dependencies: []
+service-dependencies: ['shared-app-service-s']
