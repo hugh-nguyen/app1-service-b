@@ -1,17 +1,27 @@
-// SERVICE-B
+// app1-service
 import express, { Request, Response } from 'express';
+import axios from 'axios';
+import { instrumentWithAxon } from 'cortex-axon-js';
 
 const app = express();
 
-app.get('/b/getresult', (req: Request, res: Response) => {
-  const x = parseInt(req.query.x as string, 10);
-  const y = parseInt(req.query.y as string, 10);
-  if (Number.isNaN(x) || Number.isNaN(y)) {
-    return res.status(400).json({ error: 'Missing x or y' });
+app.use(instrumentWithAxon("app1"));
+
+axios.defaults.proxy = {
+  host: 'envoy',
+  port: 8080
+};
+
+app.get('/getresult', async (req: Request, res: Response) => {
+  try {
+    const response = await axios.get(`http://localhost/shared-app/service-s/getresult/`);
+    return res.status(response.status).json(["B=6", ...response.data]);
+  } catch (err: any) {
+    console.error("Error calling /b/getresult:", err.message);
+    return res.status(500).json({ error: "Something went wrong" });
   }
-  res.json({ result: x * y });
 });
 
 app.listen(80, () => {
-  console.log('listening on port 80');
+  console.log('service-a listening on port 80');
 });
