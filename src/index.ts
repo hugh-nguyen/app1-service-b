@@ -15,7 +15,7 @@ axios.defaults.proxy = {
 app.get('/getresult', async (req: Request, res: Response) => {
   try {
     const response = await axios.get(`http://localhost/shared-app/service-s/getresult/`);
-    return res.status(response.status).json(["B=6", ...response.data]);
+    return res.status(response.status).json(["B=7", ...response.data]);
   } catch (err: any) {
     console.error("Error calling /b/getresult:", err.message);
     return res.status(500).json({ error: "Something went wrong" });
